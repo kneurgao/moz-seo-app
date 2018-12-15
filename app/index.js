@@ -57,8 +57,12 @@ var options = {
 };
 
 app.post('/moz/url', function (req, res) {
-    var text = req.param.text;
-    console.debug('text=' + JSON.stringify(text));
+    var body = req.body;
+    console.debug('body=' + JSON.stringify(body));
+    var query = req.query;
+    console.debug('query=' + query);
+    var params = req.params;
+    console.debug('params=' + JSON.stringify(params));
     res.status(200).send('Test 200 OK');
 });
 
