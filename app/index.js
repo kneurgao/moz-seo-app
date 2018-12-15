@@ -45,26 +45,45 @@ signature = encodeURIComponent(signature);
 
 // var postData = JSON.stringify(['www.moz.com', 'www.apple.com', 'www.pizza.com']);
 
-var options = {
-    hostname: 'lsapi.seomoz.com',
-    path: '/linkscape/url-metrics/?Cols=' +
-        cols + '&AccessID=' + accessId +
-        '&Expires=' + expires + '&Signature=' + signature,
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        // 'Content-Length': postData.length
-    }
-};
-
 app.post('/moz/url', function (req, res) {
     var body = req.body;
     console.debug('body=' + JSON.stringify(body));
-    var query = req.query;
-    console.debug('query=' + JSON.stringify(query));
-    var params = req.params;
-    console.debug('params=' + JSON.stringify(params));
-    res.status(200).send('Test 200 OK');
+    var url = body.text;
+
+    var options = {
+        hostname: 'lsapi.seomoz.com',
+        path: '/linkscape/url-metrics/' + url + '?Cols=' +
+            cols + '&AccessID=' + accessId +
+            '&Expires=' + expires + '&Signature=' + signature,
+        method: 'GET',
+        // headers: {
+        //     'Content-Type': 'application/json',
+        //     'Content-Length': url.length
+        // }
+    };
+
+    // var urls = [];
+    // var url = body.text;
+    // urls.push(url);
+    // var postData = JSON.stringify(urls);
+    // options.headers['Content-Length'] = postData.length;
+    
+    var mozRequest = http.request(options, function (mozResponse) {
+        var data = "";
+        mozResponse.setEncoding('utf8');
+        mozResponse.on('data', function (chunk) {
+            data += chunk;
+        });
+        mozResponse.on('end', function () {
+            console.log('data=' + data);
+            var urlMetrics = JSON.parse(data);
+            res.status(200).send(urlMetrics);
+        });
+    });
+
+    //Make the request.
+    // mozRequest.write();
+    mozRequest.end();
 });
 
 app.listen(process.env.PORT || 3000, function () {
