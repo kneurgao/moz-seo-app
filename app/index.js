@@ -19,7 +19,7 @@ var secretKey = '7ddf584df61b4282cb915eeec465001';
 
 // `bitFlagExampleValues` is a list of bitFlag values as strings that we'll
 // loop over and sum together using helper function: `sumColumnValues`
-var bitFlagExampleValues = ['4', '16384', '536870912', '34359738368', '68719476736'];
+var bitFlagExampleValues = ['1', '4', '32', '2048', '16384', '32768', '67108864', '536870912', '34359738368', '68719476736', '144115188075855872'];
 var sumColumnValues = function (bitFlagValues) {
     return bitFlagValues.reduce(function (accu, bitFlag) {
         var accuValBig = new bigJs(accu);
@@ -77,7 +77,23 @@ app.post('/moz/url', function (req, res) {
         mozResponse.on('end', function () {
             console.log('data=' + data);
             var urlMetrics = JSON.parse(data);
-            res.status(200).send(urlMetrics);
+
+            var responseData = 
+                'Title: ' + urlMetrics.ut + '\n' +
+                'Canonical URL: ' + urlMetrics.uu + '\n' +
+                'External Equity Links: ' + urlMetrics.ueid + '\n' +
+                'Links: ' + urlMetrics.uid + '\n' +
+                'MozRank: URL: ' + urlMetrics.umrp + '\n' +
+                'MozRank: URL (Raw): ' + urlMetrics.umrr + '\n' +
+                'MozRank: Subdomain: ' + urlMetrics.fmrp + '\n' +
+                'MozRank: Subdomain (Raw): ' + urlMetrics.fmrr + '\n' +
+                'Subdomain Spam Score: ' + urlMetrics.fspsc + '\n' +
+                'HTTP Status Code: ' + urlMetrics.us + '\n' +
+                'Page Authority: ' + urlMetrics.upa + '\n' +
+                'Domain Authority: ' + urlMetrics.pda + '\n'
+                'Time last crawled: ' + urlMetrics.ulc;
+
+            res.status(200).send(responseData);
         });
     });
 
