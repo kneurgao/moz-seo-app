@@ -3,6 +3,7 @@
 const express = require('express');
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded());
 
 var crypto = require('crypto');
 var http = require('http');
@@ -60,7 +61,7 @@ app.post('/moz/url', function (req, res) {
     var body = req.body;
     console.debug('body=' + JSON.stringify(body));
     var query = req.query;
-    console.debug('query=' + query);
+    console.debug('query=' + JSON.stringify(query));
     var params = req.params;
     console.debug('params=' + JSON.stringify(params));
     res.status(200).send('Test 200 OK');
