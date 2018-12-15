@@ -57,7 +57,7 @@ var options = {
 };
 
 app.post('/moz/url', function (req, res) {
-    var text = req.query.text;
+    var text = req.param.text;
     console.debug('text=' + JSON.stringify(text));
     res.status(200).send('Test 200 OK');
 });
