@@ -79,6 +79,7 @@ app.post('/moz/url', function (req, res) {
             var urlMetrics = JSON.parse(data);
 
             var responseData = 
+                'URL: ' + url + '\n' +
                 'Title: ' + urlMetrics.ut + '\n' +
                 'Canonical URL: ' + urlMetrics.uu + '\n' +
                 'External Equity Links: ' + urlMetrics.ueid + '\n' +
