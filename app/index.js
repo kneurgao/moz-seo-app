@@ -104,7 +104,7 @@ app.post('/moz/url', function (req, res) {
     mozRequest.end();
 });
 
-app.post('/auth/redirect', function (req, res) {
+app.get('/auth/redirect', function (req, res) {
     var options = {
         uri: 'https://slack.com/api/oauth.access?code='
             +req.query.code+
