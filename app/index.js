@@ -7,6 +7,7 @@ app.use(express.urlencoded());
 
 var crypto = require('crypto');
 var http = require('http');
+var path = require('path');
 // `bigJs` is used for number-precision when summing the bitFlag values
 var bigJs = require('big.js');
 
@@ -102,6 +103,12 @@ app.post('/moz/url', function (req, res) {
     // mozRequest.write();
     mozRequest.end();
 });
+
+app.post('/auth/redirect', function (req, res) {
+    
+});
+
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.listen(process.env.PORT || 3000, function () {
     console.log('Your app server is running...');
